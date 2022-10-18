@@ -12,4 +12,4 @@ test:
 	docker compose run --rm api \
 		sh -c "python manage.py wait_for_db && python manage.py test -v 2"
 
-.PHONY: up down rs build
+.PHONY: up down rs build test
