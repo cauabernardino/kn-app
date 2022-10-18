@@ -5,4 +5,4 @@ from shipments.models import Shipment
 class ShipmentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Shipment
-        fields = ["id", "created_at", "description", "due_date"]
+        fields = ["id", "created_at", "description", "destination", "due_date"]
