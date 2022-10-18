@@ -16,9 +16,5 @@ RUN mkdir /api
 WORKDIR /api
 COPY ./api /api
 
-RUN mkdir -p /vol/web/media
-RUN mkdir -p /vol/web/static
 RUN adduser -D runner
-RUN chown -R runner:runner /vol/
-RUN chmod -R 755 /vol/web
 USER runner

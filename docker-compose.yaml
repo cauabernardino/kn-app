@@ -4,8 +4,8 @@ services:
     api:
         build:
             context: .
-            dockerfile: Dockerfile
-        depends_on: 
+            dockerfile: api.dockerfile
+        depends_on:
             - db
         container_name: shipments_api
         environment:
@@ -17,6 +17,8 @@ services:
             - DB_PASSWORD=${POSTGRES_PASSWORD}
         ports:
             - "8000:8000"
+        networks:
+            - shipments
         volumes:
             - ./api:/api
         command: >
@@ -33,8 +35,30 @@ services:
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         ports:
             - "5432:5432"
+        networks:
+            - shipments
         volumes:
             - data:/var/lib/postgresql/data
 
+    client:
+        build:
+            context: .
+            dockerfile: client.dockerfile
+            target: "setup-stage"
+        depends_on:
+            - api
+        container_name: shipments_client
+        ports:
+            - "8080:8080"
+        networks:
+            - shipments
+        volumes:
+            - ./client/shipments_client:/app
+        command: >
+            /bin/sh -c "npm run serve"
+
+networks:
+    shipments:
+        driver: bridge
 volumes:
     data:
