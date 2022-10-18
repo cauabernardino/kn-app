@@ -13,7 +13,6 @@ def shipments(request):
     Handles `/shipments` endpoint actions.
     """
     if request.method == "GET":
-        # All shipments
         shipments = Shipment.objects.all()
         serializer = ShipmentSerializer(shipments, many=True)
 
@@ -46,7 +45,7 @@ def shipments_specific(request, pk: int):
 
         return JsonResponse(serializer.data, safe=False)
 
-    if request.method == "PUT":
+    elif request.method == "PUT":
         data = JSONParser().parse(request)
         serializer = ShipmentSerializer(task, data=data)
 
