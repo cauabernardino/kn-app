@@ -35,7 +35,7 @@ def shipments_specific(request, pk: int):
     Handle `/shipments/{id}` endpoint actions.
     """
     try:
-        task = Shipment.objects.get(pk=pk)
+        shipment = Shipment.objects.get(pk=pk)
     except Exception:
         return HttpResponse(status=404)
 
@@ -47,7 +47,7 @@ def shipments_specific(request, pk: int):
 
     elif request.method == "PUT":
         data = JSONParser().parse(request)
-        serializer = ShipmentSerializer(task, data=data)
+        serializer = ShipmentSerializer(shipment, data=data)
 
         if serializer.is_valid():
             serializer.save()
@@ -55,5 +55,5 @@ def shipments_specific(request, pk: int):
         return JsonResponse(serializer.errors, status=400)
 
     elif request.method == "DELETE":
-        task.delete()
+        shipment.delete()
         return HttpResponse(status=204)
